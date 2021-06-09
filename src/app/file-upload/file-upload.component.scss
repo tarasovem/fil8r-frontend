@@ -1,0 +1,23 @@
+.file-input {
+  display: none;
+}
+
+.file-upload {
+  display: flex;
+  align-items: center;
+}
+
+.file-placeholder {
+  display: inline-block;
+  width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.upload-btn {
+  margin-left: 10px;
+}
+
+.submit-btn {
+  margin-left: 16px;
+}

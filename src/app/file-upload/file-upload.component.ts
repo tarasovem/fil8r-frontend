@@ -10,19 +10,25 @@ export class FileUploadComponent {
 
   constructor(private http: HttpClient) { }
 
-  fileName = '';
+  INPUT_NAME = 'uploadFile';
+  fileName: string = '';
+  fileData: any;
 
   onFileSelect(event: any): void {
     const file:File = event.target.files[0];
 
     if (file) {
       this.fileName = file.name;
-      const formData = new FormData();
-      formData.append('uploadFile', file);
-
-      const upload$ = this.http.post('http://127.0.0.1:3300/api/file', formData);
-
-      upload$.subscribe();
+      this.fileData = file;
     }
+  }
+
+  onSubmitClick() {
+    const formData = new FormData();
+    formData.append(this.INPUT_NAME, this.fileData);
+
+    const upload$ = this.http.post('http://127.0.0.1:3300/api/file', formData);
+
+    upload$.subscribe();
   }
 }
