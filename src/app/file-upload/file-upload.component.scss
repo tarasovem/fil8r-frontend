@@ -1,10 +1,18 @@
-.file-input {
-  display: none;
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 24px;
 }
 
-.file-upload {
-  display: flex;
-  align-items: center;
+.header__logo {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+}
+
+.file-input {
+  display: none;
 }
 
 .file-placeholder {

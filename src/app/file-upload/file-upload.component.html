@@ -1,14 +1,18 @@
-<input class="file-input" type="file" (change)="onFileSelect($event)" #fileUpload>
-<div class="file-upload">
+<div class="header">
+  <div class="header__logo">Fil8r</div>
 
-  <div class="file-placeholder">
-    {{ fileName || "Выберите файл" }}
+  <div class="header__file-upload">
+    <input class="file-input" type="file" (change)="onFileSelect($event)" #fileUpload>
+
+    <div class="file-placeholder">
+      {{ fileName || "Выберите файл" }}
+    </div>
+
+    <button mat-mini-fab color="primary" class="upload-btn"
+            (click)="fileUpload.click()">
+      <mat-icon>attach_file</mat-icon>
+    </button>
+
+    <button mat-flat-button color="primary" class="submit-btn" (click)="onSubmitClick()">Загрузить</button>
   </div>
-
-  <button mat-mini-fab color="primary" class="upload-btn"
-          (click)="fileUpload.click()">
-    <mat-icon>attach_file</mat-icon>
-  </button>
-
-  <button mat-flat-button color="primary" class="submit-btn" (click)="onSubmitClick()">Загрузить</button>
 </div>
