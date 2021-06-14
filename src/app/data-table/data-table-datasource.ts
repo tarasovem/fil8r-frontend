@@ -8,30 +8,31 @@ import { Observable, of as observableOf, merge } from 'rxjs';
 export interface DataTableItem {
   name: string;
   id: number;
+  date: Date;
 }
 
 // TODO: replace this with real data from your application
 const EXAMPLE_DATA: DataTableItem[] = [
-  {id: 1, name: 'Hydrogen'},
-  {id: 2, name: 'Helium'},
-  {id: 3, name: 'Lithium'},
-  {id: 4, name: 'Beryllium'},
-  {id: 5, name: 'Boron'},
-  {id: 6, name: 'Carbon'},
-  {id: 7, name: 'Nitrogen'},
-  {id: 8, name: 'Oxygen'},
-  {id: 9, name: 'Fluorine'},
-  {id: 10, name: 'Neon'},
-  {id: 11, name: 'Sodium'},
-  {id: 12, name: 'Magnesium'},
-  {id: 13, name: 'Aluminum'},
-  {id: 14, name: 'Silicon'},
-  {id: 15, name: 'Phosphorus'},
-  {id: 16, name: 'Sulfur'},
-  {id: 17, name: 'Chlorine'},
-  {id: 18, name: 'Argon'},
-  {id: 19, name: 'Potassium'},
-  {id: 20, name: 'Calcium'},
+  {id: 1, name: 'Hydrogen', date: new Date('2021-06-01T10:41:22.598+00:00')},
+  {id: 2, name: 'Helium', date: new Date('2021-03-04T10:41:22.598+00:00')},
+  {id: 3, name: 'Lithium', date: new Date('2020-04-23T10:41:22.598+00:00')},
+  {id: 4, name: 'Beryllium', date: new Date('2021-06-06T10:41:22.598+00:00')},
+  {id: 5, name: 'Boron', date: new Date('2021-06-06T10:41:22.598+00:00')},
+  {id: 6, name: 'Carbon', date: new Date('2021-06-06T10:41:22.598+00:00')},
+  {id: 7, name: 'Nitrogen', date: new Date('2021-06-06T10:41:22.598+00:00')},
+  {id: 8, name: 'Oxygen', date: new Date('2021-06-06T10:41:22.598+00:00')},
+  {id: 9, name: 'Fluorine', date: new Date('2021-06-06T10:41:22.598+00:00')},
+  {id: 10, name: 'Neon', date: new Date('2021-06-06T10:41:22.598+00:00')},
+  {id: 11, name: 'Sodium', date: new Date('2021-06-06T10:41:22.598+00:00')},
+  {id: 12, name: 'Magnesium', date: new Date('2021-06-06T10:41:22.598+00:00')},
+  {id: 13, name: 'Aluminum', date: new Date('2021-06-06T10:41:22.598+00:00')},
+  {id: 14, name: 'Silicon', date: new Date('2021-06-06T10:41:22.598+00:00')},
+  {id: 15, name: 'Phosphorus', date: new Date('2021-06-06T10:41:22.598+00:00')},
+  {id: 16, name: 'Sulfur', date: new Date('2021-06-06T10:41:22.598+00:00')},
+  {id: 17, name: 'Chlorine', date: new Date('2021-06-06T10:41:22.598+00:00')},
+  {id: 18, name: 'Argon', date: new Date('2021-06-06T10:41:22.598+00:00')},
+  {id: 19, name: 'Potassium', date: new Date('2021-06-06T10:41:22.598+00:00')},
+  {id: 20, name: 'Calcium', date: new Date('2021-06-06T10:41:22.598+00:00')},
 ];
 
 /**
@@ -97,8 +98,7 @@ export class DataTableDataSource extends DataSource<DataTableItem> {
     return data.sort((a, b) => {
       const isAsc = this.sort?.direction === 'asc';
       switch (this.sort?.active) {
-        case 'name': return compare(a.name, b.name, isAsc);
-        case 'id': return compare(+a.id, +b.id, isAsc);
+        case 'date': return compare(+a.date, +b.date, isAsc);
         default: return 0;
       }
     });
