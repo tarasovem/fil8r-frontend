@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import { UploadService } from "../services/upload.service";
 
 @Component({
   selector: 'app-file-upload',
@@ -7,8 +7,7 @@ import {HttpClient} from "@angular/common/http";
   styleUrls: ['./file-upload.component.scss']
 })
 export class FileUploadComponent {
-
-  constructor(private http: HttpClient) { }
+  constructor(private uploadService: UploadService) { }
 
   INPUT_NAME = 'uploadFile';
   fileName: string = '';
@@ -27,7 +26,7 @@ export class FileUploadComponent {
     const formData = new FormData();
     formData.append(this.INPUT_NAME, this.fileData);
 
-    const upload$ = this.http.post('http://127.0.0.1:3300/api/file', formData);
+    const upload$ = this.uploadService.post('http://127.0.0.1:3300/api/file', formData);
 
     upload$.subscribe();
   }
