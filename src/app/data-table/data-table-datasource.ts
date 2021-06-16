@@ -7,33 +7,10 @@ import { Observable, of as observableOf, merge } from 'rxjs';
 // TODO: Replace this with your own data model type
 export interface DataTableItem {
   name: string;
-  id: number;
-  date: Date;
+  size: number;
+  creationDate: string;
+  isDeleted?: boolean;
 }
-
-// TODO: replace this with real data from your application
-const EXAMPLE_DATA: DataTableItem[] = [
-  {id: 1, name: 'Hydrogen', date: new Date('2021-06-01T10:41:22.598+00:00')},
-  {id: 2, name: 'Helium', date: new Date('2021-03-04T10:41:22.598+00:00')},
-  {id: 3, name: 'Lithium', date: new Date('2020-04-23T10:41:22.598+00:00')},
-  {id: 4, name: 'Beryllium', date: new Date('2021-06-06T10:41:22.598+00:00')},
-  {id: 5, name: 'Boron', date: new Date('2021-06-06T10:41:22.598+00:00')},
-  {id: 6, name: 'Carbon', date: new Date('2021-06-06T10:41:22.598+00:00')},
-  {id: 7, name: 'Nitrogen', date: new Date('2021-06-06T10:41:22.598+00:00')},
-  {id: 8, name: 'Oxygen', date: new Date('2021-06-06T10:41:22.598+00:00')},
-  {id: 9, name: 'Fluorine', date: new Date('2021-06-06T10:41:22.598+00:00')},
-  {id: 10, name: 'Neon', date: new Date('2021-06-06T10:41:22.598+00:00')},
-  {id: 11, name: 'Sodium', date: new Date('2021-06-06T10:41:22.598+00:00')},
-  {id: 12, name: 'Magnesium', date: new Date('2021-06-06T10:41:22.598+00:00')},
-  {id: 13, name: 'Aluminum', date: new Date('2021-06-06T10:41:22.598+00:00')},
-  {id: 14, name: 'Silicon', date: new Date('2021-06-06T10:41:22.598+00:00')},
-  {id: 15, name: 'Phosphorus', date: new Date('2021-06-06T10:41:22.598+00:00')},
-  {id: 16, name: 'Sulfur', date: new Date('2021-06-06T10:41:22.598+00:00')},
-  {id: 17, name: 'Chlorine', date: new Date('2021-06-06T10:41:22.598+00:00')},
-  {id: 18, name: 'Argon', date: new Date('2021-06-06T10:41:22.598+00:00')},
-  {id: 19, name: 'Potassium', date: new Date('2021-06-06T10:41:22.598+00:00')},
-  {id: 20, name: 'Calcium', date: new Date('2021-06-06T10:41:22.598+00:00')},
-];
 
 /**
  * Data source for the DataTable view. This class should
@@ -41,7 +18,7 @@ const EXAMPLE_DATA: DataTableItem[] = [
  * (including sorting, pagination, and filtering).
  */
 export class DataTableDataSource extends DataSource<DataTableItem> {
-  data: DataTableItem[] = EXAMPLE_DATA;
+  data: DataTableItem[] = [];
   paginator: MatPaginator | undefined;
   sort: MatSort | undefined;
 
@@ -55,12 +32,13 @@ export class DataTableDataSource extends DataSource<DataTableItem> {
    * @returns A stream of the items to be rendered.
    */
   connect(): Observable<DataTableItem[]> {
+    console.log(this.data);
     if (this.paginator && this.sort) {
       // Combine everything that affects the rendered data into one update
       // stream for the data-table to consume.
       return merge(observableOf(this.data), this.paginator.page, this.sort.sortChange)
         .pipe(map(() => {
-          return this.getPagedData(this.getSortedData([...this.data ]));
+          return this.getPagedData(this.data);
         }));
     } else {
       throw Error('Please set the paginator and sort on the data source before connecting.');
@@ -85,27 +63,4 @@ export class DataTableDataSource extends DataSource<DataTableItem> {
       return data;
     }
   }
-
-  /**
-   * Sort the data (client-side). If you're using server-side sorting,
-   * this would be replaced by requesting the appropriate data from the server.
-   */
-  private getSortedData(data: DataTableItem[]): DataTableItem[] {
-    if (!this.sort || !this.sort.active || this.sort.direction === '') {
-      return data;
-    }
-
-    return data.sort((a, b) => {
-      const isAsc = this.sort?.direction === 'asc';
-      switch (this.sort?.active) {
-        case 'date': return compare(+a.date, +b.date, isAsc);
-        default: return 0;
-      }
-    });
-  }
-}
-
-/** Simple sort comparator for example ID/Name columns (for client-side sorting). */
-function compare(a: string | number, b: string | number, isAsc: boolean): number {
-  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }
